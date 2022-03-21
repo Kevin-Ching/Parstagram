@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i(TAG, "Successfully saved post")
                 Toast.makeText(this, "Successfully saved post", Toast.LENGTH_SHORT).show()
                 findViewById<EditText>(R.id.etDescription).setText("")
+                findViewById<ImageView>(R.id.ivPicture).setImageDrawable(null)
             }
         }
     }
