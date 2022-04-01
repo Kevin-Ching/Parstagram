@@ -1,7 +1,10 @@
 package com.example.parstagram
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -26,6 +29,12 @@ class MainActivity : AppCompatActivity() {
 
         flContainer = findViewById(R.id.flContainer)
         bottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        val actionBar = supportActionBar
+        actionBar?.setDisplayShowHomeEnabled(true)
+        actionBar?.setLogo(R.drawable.nav_logo_whiteout)
+        actionBar?.setDisplayUseLogoEnabled(true)
+        actionBar?.setDisplayShowTitleEnabled(false)
 
         // TODO: Logout Button
 //        findViewById<Button>(R.id.btnLogOut).setOnClickListener {
@@ -66,6 +75,26 @@ class MainActivity : AppCompatActivity() {
 
         // Set default selection
         bottomNavigationView.selectedItemId = R.id.action_home
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.logout, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_logout -> {
+                ParseUser.logOut()
+                Log.i(TAG, "User logged out")
+                Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
